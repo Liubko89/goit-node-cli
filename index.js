@@ -1,10 +1,5 @@
 import { program } from "commander";
-import {
-  listContacts,
-  getContactById,
-  addContact,
-  removeContact,
-} from "./contacts.js";
+import contacts from "./contacts.js";
 
 program
   .option("-a, --action <type>", "choose action")
@@ -21,7 +16,7 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       try {
-        const allContacts = await listContacts();
+        const allContacts = await contacts.listContacts();
         console.log(allContacts);
       } catch (error) {
         console.error(error);
@@ -29,7 +24,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
     case "get":
       try {
-        const contact = await getContactById(id);
+        const contact = await contacts.getContactById(id);
         console.log(contact);
       } catch (error) {
         console.error(error);
@@ -38,7 +33,7 @@ async function invokeAction({ action, id, name, email, phone }) {
 
     case "add":
       try {
-        const addedContact = await addContact(name, email, phone);
+        const addedContact = await contacts.addContact(name, email, phone);
         console.log(addedContact);
       } catch (error) {
         console.error(error);
@@ -47,7 +42,7 @@ async function invokeAction({ action, id, name, email, phone }) {
 
     case "remove":
       try {
-        const removedContact = await removeContact(id);
+        const removedContact = await contacts.removeContact(id);
         console.log(removedContact);
       } catch (error) {
         console.error(error);
