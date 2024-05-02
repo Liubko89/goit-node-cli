@@ -1,8 +1,8 @@
-const fs = require("fs/promises");
-const { nanoid } = require("nanoid");
-const path = require("path");
+import * as fs from "node:fs/promises";
+import crypto from "node:crypto";
+import path from "node:path";
 
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = path.resolve("db", "contacts.json");
 
 async function listContacts() {
   const allContacts = await fs.readFile(contactsPath, { encoding: "utf-8" });
@@ -28,7 +28,7 @@ async function addContact(name, email, phone) {
   const allContacts = await listContacts();
   const newContactsList = [
     ...allContacts,
-    { id: nanoid(), name, email, phone },
+    { id: crypto.randomUUID(), name, email, phone },
   ];
 
   await fs.writeFile(
@@ -38,9 +38,4 @@ async function addContact(name, email, phone) {
   return newContactsList[newContactsList.length - 1];
 }
 
-module.exports = {
-  listContacts,
-  getContactById,
-  addContact,
-  removeContact,
-};
+export { listContacts, getContactById, addContact, removeContact };
