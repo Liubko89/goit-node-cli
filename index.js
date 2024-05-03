@@ -17,7 +17,7 @@ async function invokeAction({ action, id, name, email, phone }) {
     case "list":
       try {
         const allContacts = await contacts.listContacts();
-        console.log(allContacts);
+        console.table(allContacts);
       } catch (error) {
         console.error(error);
       }
